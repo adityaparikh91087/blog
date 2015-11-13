@@ -1,0 +1,39 @@
+<%#
+Our edit page looks very similar to the new page; in fact, they both share the same code for displaying the form.
+Let's remove this duplication by using a view partial. By convention, partial files are prefixed with an underscore.
+The reason we can use this shorter, simpler form_for declaration to stand in for either of the other forms is that
+@article is a resource corresponding to a full set of RESTful routes, and Rails is able to infer which URI and method
+to use.
+%>
+
+<%= form_for @article do |f| %>
+
+    <% if @article.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@article.errors.count, "error") %> prohibited
+            this article from being saved:
+          </h2>
+          <ul>
+            <% @article.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <p>
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </p>
+
+    <p>
+      <%= f.label :text %><br>
+      <%= f.text_area :text %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+
+<% end %>
